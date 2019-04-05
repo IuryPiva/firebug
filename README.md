@@ -10,6 +10,17 @@ Inspect firebase functions
 
 <!-- toc -->
 # Usage
+Clone this badboy
+
+    git clone https://github.com/IuryPiva/firebug.git
+
+Link him
+
+
+    npm link
+
+Be happy!
+
 <!-- usage -->
 # Commands
 <!-- commands -->
