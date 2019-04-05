@@ -14,6 +14,10 @@ Clone this badboy
 
     git clone https://github.com/IuryPiva/firebug.git
 
+Go to his
+
+    cd firebug
+
 Link him
 
 
