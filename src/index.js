@@ -31,7 +31,7 @@ class FirebugCommand extends Command {
         this.exec("npx functions stop");
         break;
       case "watch":
-        fs.watch(dir, { recursive: true } ,(eventType, filename) => {
+        fs.watch(dir, { recursive: true } , async (eventType, filename) => {
           this.log(`Detected ${eventType} on ${filename}`);
           if(eventType == 'change' && filename.includes('.f.ts')) {
             await this.firebug(generateFunctionName(filename))
