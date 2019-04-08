@@ -19,6 +19,8 @@ function generateFunctionName(file) {
   )
 }
 
+const runningFunctions = []
+
 class FirebugCommand extends Command {
   async run() {
     const { args } = this.parse(FirebugCommand);
@@ -62,8 +64,16 @@ class FirebugCommand extends Command {
   }
 
   async firebug(functionName) {
+    if(runningFunctions.length && functionName != runningFunctions[0]) await this.reset(functionName)
+
     await this.exec(`npx functions deploy ${functionName} --trigger-http -t 10000s`);
     await this.exec(`npx functions inspect ${functionName}`);
+
+    runningFunctions.push(functionName)
+  }
+
+  async reset(functionName) {
+    await this.exec(`functions reset ${functionName}`)
   }
 }
 FirebugCommand.args = [{ name: "functionName" }, { name: "dir" }];
