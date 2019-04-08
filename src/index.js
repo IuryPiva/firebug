@@ -1,8 +1,10 @@
 const { Command, flags } = require("@oclif/command");
 const execa = require("execa");
-const fs = require('fs');
+const watch = require('node-watch');
 const camelCase = require('camelcase')
 const path = require('path')
+const os = require('os')
+const fs = require('fs')
 
 function generateFunctionName(file) { 
   return camelCase(
@@ -31,12 +33,22 @@ class FirebugCommand extends Command {
         this.exec("npx functions stop");
         break;
       case "watch":
-        fs.watch(dir, { recursive: true } , async (eventType, filename) => {
-          this.log(`Detected ${eventType} on ${filename}`);
-          if(eventType == 'change' && filename.includes('.f.ts')) {
-            await this.firebug(generateFunctionName(filename))
-          }
-        })
+        if(os.platform() == 'linux') {
+          watch(dir, { recursive: true } , async (eventType, filename) => {
+            this.log(`Detected ${eventType} on ${filename}`);
+            if(eventType == 'update' && filename.includes('.f.ts')) {
+              await this.firebug(generateFunctionName(filename))
+            }
+          })
+        } else {
+          fs.watch(dir, { recursive: true } , async (eventType, filename) => {
+            this.log(`Detected ${eventType} on ${filename}`);
+            if(eventType == 'change' && filename.includes('.f.ts')) {
+              await this.firebug(generateFunctionName(filename))
+            }
+          })
+        }
+        
         break;
       default:
         this.firebug(functionName)

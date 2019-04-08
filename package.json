@@ -12,7 +12,8 @@
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^2",
     "camelcase": "^5.3.1",
-    "execa": "^1.0.0"
+    "execa": "^1.0.0",
+    "node-watch": "^0.6.0"
   },
   "devDependencies": {
     "eslint": "^5.13",
