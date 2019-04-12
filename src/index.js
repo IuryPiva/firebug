@@ -59,7 +59,8 @@ class FirebugCommand extends Command {
 
   async exec(command) {
     this.log(command);
-    const { stdout } = await execa.shell(command);
+    const { stdout, stderr,  } = await execa.shell(command);
+    if(stderr) this.log(stderr);
     this.log(stdout);
   }
 
